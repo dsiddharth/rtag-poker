@@ -1,0 +1,61 @@
+types:
+  PlayerName: string
+  Player:
+    name: PlayerName
+    chips: number
+    cards: Card[]
+    currentBet: number
+    currentStatus: PlayerStatus
+  Card:
+    value: CardValue 
+    suit: CardSuit
+  CardValue:
+    - ONE
+    - TWO
+    - THREE
+    - FOUR
+    - FIVE
+    - SIX
+    - SEVEN
+    - EIGHT
+    - NINE
+    - TEN
+    - JACK
+    - QUEEN
+    - KING
+    - ACE
+  CardSuit:
+    - CLUB
+    - SPACE
+    - HEART
+    - DIAMOND
+  PlayerStatus:
+    - WAITING
+    - DECIDING
+    - FOLDED
+  GameState:
+    players: Player[]
+    dealer: PlayerName
+    activePlayer: PlayerName
+    currentPot: number
+    amountToCall: number
+
+methods:
+  createGame:
+  joinGame:
+  startGame:
+    startingBlind: number
+    startingChipsPerPlayer: number
+  call:
+  raise:
+    raiseAmount: number
+  fold:
+
+
+auth:
+  anonymous:
+    separator: "-"
+
+userState: GameState
+initialize: createGame
+error: string

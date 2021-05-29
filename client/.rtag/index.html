@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/.rtag/styles.css" />
+    <link rel="stylesheet" href="/.rtag/node_modules/vue-select/dist/vue-select.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <router-view></router-view>
+    </div>
+    <script type="text/x-template" id="home-template">
+      <div>
+        <button type="button" class="button" @click="createState">
+          <span class="button-text">Create new</span>
+        </button>
+        <div>Or</div>
+        <form class="form-group" @submit.prevent="joinState">
+          <div class="input-group">
+            <input class="input" v-model="stateId" type="text" />
+          </div>
+          <button type="submit" class="button submit">
+            <span class="button-text">Join existing</span>
+          </button>
+        </form>
+      </div>
+    </script>
+    <script type="text/x-template" id="state-template">
+      <div class="container">
+        <div class="forms-container">
+          <method-form method="joinGame" v-slot="{ value, update }">
+            <object-input arg="joinGame" :value="value.joinGame" :required="true" @update="update" v-slot="{ value, update }">
+            </object-input>
+          </method-form>
+          <method-form method="startGame" v-slot="{ value, update }">
+            <object-input arg="startGame" :value="value.startGame" :required="true" @update="update" v-slot="{ value, update }">
+              <key-display class="label" value="startingBlind*" type-string="number"></key-display>
+              <number-input arg="startingBlind" :value="value.startingBlind" :required="true" @update="update"></number-input>
+              <key-display class="label" value="startingChipsPerPlayer*" type-string="number"></key-display>
+              <number-input arg="startingChipsPerPlayer" :value="value.startingChipsPerPlayer" :required="true" @update="update"></number-input>
+            </object-input>
+          </method-form>
+          <method-form method="call" v-slot="{ value, update }">
+            <object-input arg="call" :value="value.call" :required="true" @update="update" v-slot="{ value, update }">
+            </object-input>
+          </method-form>
+          <method-form method="raise" v-slot="{ value, update }">
+            <object-input arg="raise" :value="value.raise" :required="true" @update="update" v-slot="{ value, update }">
+              <key-display class="label" value="raiseAmount*" type-string="number"></key-display>
+              <number-input arg="raiseAmount" :value="value.raiseAmount" :required="true" @update="update"></number-input>
+            </object-input>
+          </method-form>
+          <method-form method="fold" v-slot="{ value, update }">
+            <object-input arg="fold" :value="value.fold" :required="true" @update="update" v-slot="{ value, update }">
+            </object-input>
+          </method-form>
+        </div>
+        <div v-if="Object.keys(value).length > 0" class="json-state">
+          {
+          <object-display class="object-display" :value="value" v-slot="{ value }">
+            <div class="kv-display">
+              <key-display value="players" type-string="Player[]"></key-display>
+              [
+              <array-display class="array-display" :value="value.players" v-slot="{ value }">
+                  {
+                  <object-display class="object-display" :value="value" v-slot="{ value }">
+                    <div class="kv-display">
+                      <key-display value="name" type-string="PlayerName"></key-display>
+                      <string-display class="string-display" :value="value.name"></string-display>,
+                    </div>
+                    <div class="kv-display">
+                      <key-display value="chips" type-string="number"></key-display>
+                      <number-display class="number-display" :value="value.chips"></number-display>,
+                    </div>
+                    <div class="kv-display">
+                      <key-display value="cards" type-string="Card[]"></key-display>
+                      [
+                      <array-display class="array-display" :value="value.cards" v-slot="{ value }">
+                          {
+                          <object-display class="object-display" :value="value" v-slot="{ value }">
+                            <div class="kv-display">
+                              <key-display value="value" type-string="CardValue"></key-display>
+                              <enum-display class="enum-display" :value="value.value" enum="CardValue"></enum-display>,
+                            </div>
+                            <div class="kv-display">
+                              <key-display value="suit" type-string="CardSuit"></key-display>
+                              <enum-display class="enum-display" :value="value.suit" enum="CardSuit"></enum-display>,
+                            </div>
+                          </object-display>
+                          },
+                      </array-display>
+                      ],
+                    </div>
+                    <div class="kv-display">
+                      <key-display value="currentBet" type-string="number"></key-display>
+                      <number-display class="number-display" :value="value.currentBet"></number-display>,
+                    </div>
+                    <div class="kv-display">
+                      <key-display value="currentStatus" type-string="PlayerStatus"></key-display>
+                      <enum-display class="enum-display" :value="value.currentStatus" enum="PlayerStatus"></enum-display>,
+                    </div>
+                  </object-display>
+                  },
+              </array-display>
+              ],
+            </div>
+            <div class="kv-display">
+              <key-display value="dealer" type-string="PlayerName"></key-display>
+              <string-display class="string-display" :value="value.dealer"></string-display>,
+            </div>
+            <div class="kv-display">
+              <key-display value="activePlayer" type-string="PlayerName"></key-display>
+              <string-display class="string-display" :value="value.activePlayer"></string-display>,
+            </div>
+            <div class="kv-display">
+              <key-display value="currentPot" type-string="number"></key-display>
+              <number-display class="number-display" :value="value.currentPot"></number-display>,
+            </div>
+            <div class="kv-display">
+              <key-display value="amountToCall" type-string="number"></key-display>
+              <number-display class="number-display" :value="value.amountToCall"></number-display>,
+            </div>
+          </object-display>
+          },
+        </div>
+      </div>
+    </script>
+    <script type="module" src="/@vite/client"></script>
+    <script type="module" src="/.rtag/app.ts"></script>
+  </body>
+</html>
