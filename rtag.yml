@@ -6,39 +6,26 @@ types:
     cards: Card[]
     currentBet: number
     currentStatus: PlayerStatus
-  Card:
-    value: CardValue 
-    suit: CardSuit
-  CardValue:
-    - ONE
-    - TWO
-    - THREE
-    - FOUR
-    - FIVE
-    - SIX
-    - SEVEN
-    - EIGHT
-    - NINE
-    - TEN
-    - JACK
-    - QUEEN
-    - KING
-    - ACE
-  CardSuit:
-    - CLUB
-    - SPACE
-    - HEART
-    - DIAMOND
+  Card: string
   PlayerStatus:
     - WAITING
-    - DECIDING
+    - PLAYED
     - FOLDED
+  RoundStatus:
+    - WAITING
+    - PRE_FLOP
+    - FLOP
+    - TURN
+    - RIVER
+    - DONE
   GameState:
     players: Player[]
     dealer: PlayerName
     activePlayer: PlayerName
     currentPot: number
     amountToCall: number
+    roundStatus: RoundStatus
+    revealedCards: Card[]
 
 methods:
   createGame:
@@ -46,6 +33,7 @@ methods:
   startGame:
     startingBlind: number
     startingChipsPerPlayer: number
+  startRound:
   call:
   raise:
     raiseAmount: number
